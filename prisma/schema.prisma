@@ -12,6 +12,43 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  username  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}
+
+enum FeedType {
+  Variable
+  Function
+}
+
+model Feed {
+  id                 String        @id @default(uuid())
+  identifier         String
+  versions           FeedVersion[] @relation("Versions")
+  activatedVersionId String        @unique
+  activatedVersion   FeedVersion   @relation("ActivatedVersion", fields: [activatedVersionId], references: [id])
+  value              Json?
+  createdAt          DateTime      @default(now())
+  updatedAt          DateTime      @default(now()) @updatedAt
+}
+
+model FeedVersion {
+  id              String   @id @default(uuid())
+  feedId          String
+  feed            Feed     @relation("Versions", fields: [feedId], references: [id])
+  type            FeedType
+  code            String
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @default(now()) @updatedAt
+  activatedFeedId String?
+  activatedFeed   Feed?    @relation("ActivatedVersion")
+}
+
 model Log {
   id      Int    @id @default(autoincrement())
   level   Level
