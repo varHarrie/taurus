@@ -8,5 +8,10 @@
   "compilerOptions": {
     "jsx": "react-jsx",
     "jsxImportSource": "preact"
+  },
+  "lint": {
+    "files": {
+      "exclude": ["node_modules", "prisma/client"]
+    }
   }
 }

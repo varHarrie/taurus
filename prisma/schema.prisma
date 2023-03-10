@@ -21,43 +21,41 @@ model User {
   updatedAt DateTime @default(now()) @updatedAt
 }
 
-enum FeedType {
+enum SnippetType {
   Variable
   Function
 }
 
-model Feed {
-  id                 String        @id @default(uuid())
-  identifier         String
-  versions           FeedVersion[] @relation("Versions")
-  activatedVersionId String        @unique
-  activatedVersion   FeedVersion   @relation("ActivatedVersion", fields: [activatedVersionId], references: [id])
-  value              Json?
-  createdAt          DateTime      @default(now())
-  updatedAt          DateTime      @default(now()) @updatedAt
+model Snippet {
+  id               String           @id @default(uuid())
+  identifier       String
+  versions         SnippetVersion[] @relation("Versions")
+  currentVersionId String           @unique
+  currentVersion   SnippetVersion   @relation("CurrentVersion", fields: [currentVersionId], references: [id])
+  scheduledTaskId  String?
+  scheduledTask    ScheduledTask?
+  value            Json?
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @default(now()) @updatedAt
 }
 
-model FeedVersion {
-  id              String   @id @default(uuid())
-  feedId          String
-  feed            Feed     @relation("Versions", fields: [feedId], references: [id])
-  type            FeedType
-  code            String
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @default(now()) @updatedAt
-  activatedFeedId String?
-  activatedFeed   Feed?    @relation("ActivatedVersion")
+model SnippetVersion {
+  id                 String      @id @default(uuid())
+  snippetId          String
+  snippet            Snippet     @relation("Versions", fields: [snippetId], references: [id])
+  type               SnippetType
+  code               String
+  createdAt          DateTime    @default(now())
+  updatedAt          DateTime    @default(now()) @updatedAt
+  activatedsnippetId String?
+  activatedsnippet   Snippet?    @relation("CurrentVersion")
 }
 
-model Log {
-  id      Int    @id @default(autoincrement())
-  level   Level
-  message String
-  meta    Json
-}
-
-enum Level {
-  Info
-  Warn
-  Error
+model ScheduledTask {
+  id        String   @id @default(uuid())
+  snippetId String   @unique
+  snippet   Snippet  @relation(fields: [snippetId], references: [id])
+  cron      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
 }
