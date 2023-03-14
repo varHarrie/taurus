@@ -29,6 +29,7 @@ enum SnippetType {
 model Snippet {
   id               String           @id @default(uuid())
   identifier       String
+  private          Boolean          @default(false)
   versions         SnippetVersion[] @relation("Versions")
   currentVersionId String           @unique
   currentVersion   SnippetVersion   @relation("CurrentVersion", fields: [currentVersionId], references: [id])

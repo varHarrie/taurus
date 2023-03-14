@@ -36,6 +36,7 @@ export async function register(dto: RegisterDTO) {
 export async function login(dto: LoginDTO) {
   const user = await db.user.findFirst({
     where: { email: dto.email, password: dto.password },
+    select: { id: true, email: true, username: true },
   });
 
   return user;

@@ -4,22 +4,26 @@
 
 import config from "./deno.json" assert { type: "json" };
 import * as $0 from "./routes/[name].tsx";
-import * as $1 from "./routes/api/auth/login.ts";
-import * as $2 from "./routes/api/auth/register.ts";
-import * as $3 from "./routes/index.tsx";
-import * as $4 from "./routes/login.tsx";
-import * as $$0 from "./islands/Counter.tsx";
+import * as $1 from "./routes/_middleware.ts";
+import * as $2 from "./routes/api/auth/login.ts";
+import * as $3 from "./routes/api/auth/register.ts";
+import * as $4 from "./routes/index.tsx";
+import * as $5 from "./routes/login.tsx";
+import * as $$0 from "./islands/CodeEditor.tsx";
+import * as $$1 from "./islands/SnippetEditor.tsx";
 
 const manifest = {
   routes: {
     "./routes/[name].tsx": $0,
-    "./routes/api/auth/login.ts": $1,
-    "./routes/api/auth/register.ts": $2,
-    "./routes/index.tsx": $3,
-    "./routes/login.tsx": $4,
+    "./routes/_middleware.ts": $1,
+    "./routes/api/auth/login.ts": $2,
+    "./routes/api/auth/register.ts": $3,
+    "./routes/index.tsx": $4,
+    "./routes/login.tsx": $5,
   },
   islands: {
-    "./islands/Counter.tsx": $$0,
+    "./islands/CodeEditor.tsx": $$0,
+    "./islands/SnippetEditor.tsx": $$1,
   },
   baseUrl: import.meta.url,
   config,
